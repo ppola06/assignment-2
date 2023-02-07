@@ -134,6 +134,12 @@ new_movie["studio_id"] = studio["id"]
 new_movie.save
 puts "movies: #{Movie.all.count}"
 
+#all_studios = Studio.all
+#puts all_studios.inspect
+
+#all_movies = Movie.all
+#puts all_movies.inspect 
+
 new_actor = Actor.new
 new_actor["name"] = "Christian Bale"
 new_actor.save
@@ -263,7 +269,7 @@ movie_3 = Movie.find_by({"title" => "The Dark Knight Rises"})
 actor_1 = Actor.find_by({"name" => "Christian Bale"})
 new_role = Role.new
 new_role["movie_id"] = movie_3["id"]
-new_role["actor_id"] = actor_8["id"]
+new_role["actor_id"] = actor_1["id"]
 new_role["character_name"] = "Bruce Wayne"
 new_role.save
 
@@ -314,12 +320,13 @@ all_movies = Movie.all
 #puts all_movies.inspect
 
 for movie in all_movies
-    studio = Studio.find_by({"id" => movie["studio_id"]})
-    #puts studio.inspect
+    
 
     title = movie["title"]
     year_released = movie["year_released"]
     rated = movie ["rated"]
+    studio = Studio.find_by({"id" => movie["studio_id"]})
+    #puts studio.inspect
     studio_name = studio["name"]
     puts "#{title} #{year_released} #{rated} #{studio_name}"
 end 
@@ -334,11 +341,15 @@ puts ""
 # TODO!
 
 all_roles = Role.all
-puts all_roles.inspect
+#puts all_roles.inspect
 
 for role in all_roles
-    movie_id = role["movie_id"]
-    actor_id = role["actor_id"]
+    movie = Movie.find_by({"id" => role["movie_id"]})
+    movie_title = movie["title"]
+
+    actor = Actor.find_by({"id" => role["actor_id"]})
+    actor_name = actor["name"]
+
     character_name = role["character_name"]
-    puts "#{movie_id} #{actor_id} #{character_name}"
+    puts "#{movie_title} #{actor_name} #{character_name}"
 end 
